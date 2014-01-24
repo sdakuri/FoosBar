@@ -25,9 +25,9 @@
         </dependency>
 
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>2.5</version>
+        	<groupId>javax.servlet</groupId>
+        	<artifactId>javax.servlet-api</artifactId>
+        	<version>3.1.0</version>
         </dependency>
 
         <dependency>
@@ -88,6 +88,43 @@
                     <includes>
                         <include>**/*Tests.java</include>
                     </includes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven2-plugin</artifactId>
+                <version>1.4.5</version>
+                <configuration>
+                    <!-- Feed them this value; Decides if Cargo should wait after the container is started or not -->
+                    <container>
+                        <containerId>tomcat7x</containerId>
+                        <home>${tomcat7.home}</home>
+                        <timeout>360000</timeout>
+                        <dependencies>
+                            <!-- Specify the jdbc connector to use -->
+                            <dependency>
+                                <groupId>postgresql</groupId>
+                                <artifactId>postgresql</artifactId>
+                            </dependency>
+                        </dependencies>
+                    </container>
+                    <configuration>
+                        <home>${basedir}/target/tomcat7x</home>
+                        <properties>
+                            <cargo.jvmargs> -Xms512m -Xmx1024m -XX:MaxPermSize=256m -XX:+UseParNewGC -XX:+UseConcMarkSweepGC</cargo.jvmargs>
+                            <cargo.servlet.uriencoding>UTF-8</cargo.servlet.uriencoding>
+                        </properties>
+                    </configuration>
+                    <deployables>
+                        <deployable>
+                            <location>target/foosbar.war</location>
+                            <pingURL>http://localhost:8080/index.html</pingURL>
+                            <properties>
+                                <context>/</context>
+                            </properties>
+                            <type>WAR</type>
+                        </deployable>
+                    </deployables>
                 </configuration>
             </plugin>
         </plugins>
