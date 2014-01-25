@@ -4,24 +4,43 @@ var FoosBarApp = {};
 
 var App = angular.module('FoosBar',[]);
 
-
-
-/**
- * PlayerController
- * @Constructor
- */
-var PlayerController = function($scope, $http){
+function registration($scope, $http){
     $scope.registerPlayer = function(player){
         $http.post('player/register', player).success(function() {
-            console.log("Yay, created player")
+            $scope.player.firstName = '';
+            $scope.player.lastName = '';
         });
     }
 }
 
-function registration($scope, $http){
-    $scope.registerPlayer = function(player){
-        $http.post('player/register', player).success(function() {
-            console.log("Yay, created player")
+function GameControl($scope,$http){
+    $scope.selectedPlayer1 = null;
+    $scope.selectedPlayer2 = null;
+    var playGame = $('#playgame')
+    var startGame = $('#startgame')
+    var firstPlayer = $('#player1')
+    var secondPlayer = $('#player2')
+    playGame.click(function(){
+        $http.get('player/all').success(function(players){
+            $scope.players = players;
         });
-    }
+    });
+
+    firstPlayer.change(function(){
+        $scope.selectedPlayer1 = $('#player1').val();
+    })
+
+    secondPlayer.change(function(){
+        $scope.selectedPlayer2 = $('#player2').val();
+    });
+
+    startGame.click(function(){
+        //var url = "game/start?firstplayer="+$scope.selectedPlayer1+"&secondplayer="+$scope.selectedPlayer2;
+        //console.log(url);
+        var players = {"firstplayer":$scope.selectedPlayer1,"secondplayer":$scope.selectedPlayer2}
+        $http.post('game/start',players).success(function(game){
+            console.log(game);
+
+        })
+    });
 }

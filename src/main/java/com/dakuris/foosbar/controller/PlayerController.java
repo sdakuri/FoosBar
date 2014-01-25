@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * Created by IntelliJ IDEA.
  * User: Shashidhar Dakuri
@@ -25,8 +27,13 @@ public class PlayerController {
         playerManager.createPlayer(player.getFirstName(), player.getLastName());
     }
 
-    @RequestMapping(value="/get/{id}", method = RequestMethod.GET, produces="application/json")
+    @RequestMapping(value="/{id}", method = RequestMethod.GET, produces="application/json")
     public @ResponseBody Player getPlayer(@PathVariable int id){
         return playerManager.getPlayer(id);
+    }
+
+    @RequestMapping(value="/all", method = RequestMethod.GET, produces="application/json")
+    public @ResponseBody List<Player> getPlayers(){
+        return playerManager.getPlayers();
     }
 }

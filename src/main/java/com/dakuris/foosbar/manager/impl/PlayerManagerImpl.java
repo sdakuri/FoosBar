@@ -5,6 +5,8 @@ import com.dakuris.foosbar.dao.PlayerDAO;
 import com.dakuris.foosbar.manager.PlayerManager;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 /**
  * Created by IntelliJ IDEA.
  * User: Shashidhar Dakuri
@@ -29,6 +31,11 @@ public class PlayerManagerImpl implements PlayerManager {
     @Override
     public Player getPlayer(long id) {
         return playerDAO.getPlayer(id);
+    }
+
+    @Override
+    public List<Player> getPlayers() {
+        return playerDAO.getPlayers();
     }
 
     @Override

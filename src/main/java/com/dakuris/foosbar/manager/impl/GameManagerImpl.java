@@ -2,7 +2,10 @@ package com.dakuris.foosbar.manager.impl;
 
 import com.dakuris.foosbar.base.Game;
 import com.dakuris.foosbar.base.Player;
+import com.dakuris.foosbar.dao.GameDAO;
 import com.dakuris.foosbar.manager.GameManager;
+import com.dakuris.foosbar.manager.PlayerManager;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Created by IntelliJ IDEA.
@@ -13,14 +16,33 @@ import com.dakuris.foosbar.manager.GameManager;
  */
 public class GameManagerImpl implements GameManager {
 
+    @Autowired
+    private PlayerManager playerManager;
+
+    @Autowired
+    private GameDAO gameDao;
+
     @Override
-    public Game createGame(Player playerOne, Player playerTwo) {
-        return null;
+    public Game createGame(int playerOne, int playerTwo) {
+        Player firstPlayer = playerManager.getPlayer(playerOne);
+        Player secondPlayer = playerManager.getPlayer(playerTwo);
+
+        if(firstPlayer==null|| secondPlayer==null)
+            return null;
+        if(firstPlayer==secondPlayer)
+            return null;
+
+        Game game = new Game(playerOne,playerTwo);
+
+        if(gameDao.createGame(game)>0)
+            return game;
+        else
+            return null;
     }
 
     @Override
     public Game getGame(long id) {
-        return null;
+        return gameDao.getGame(id);
     }
 
     @Override

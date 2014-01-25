@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -22,6 +23,7 @@ public class PlayerDAO extends JdbcDaoSupport {
     Logger log = LogManager.getLogger(PlayerDAO.class);
     private static final String CREATE_PLAYER = "INSERT INTO player(firstname, lastname) values (?,?) ";
     private static final String GET_PLAYER = "SELECT * FROM player WHERE id = ? ";
+    private static final String GET_PLAYERS = "SELECT * FROM player ";
 
     public boolean createPlayer(Player player){
         try{
@@ -48,6 +50,10 @@ public class PlayerDAO extends JdbcDaoSupport {
 
     public boolean deletePlayer(long id){
         return true;
+    }
+
+    public List<Player> getPlayers() {
+        return getJdbcTemplate().query(GET_PLAYERS,playerParameterizedRowMapper);
     }
 
     private ParameterizedRowMapper<Player> playerParameterizedRowMapper

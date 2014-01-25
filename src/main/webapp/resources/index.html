@@ -114,24 +114,30 @@
 
           <hr class="featurette-divider">
           <a name="start" style="padding-top: 100px"></a>
-          <div class="row jumbotron" style="margin-left:250px; margin-right:250px">
-            <div class="col-sm-8 col-md-offset-2">
-              <h2 class="featurette-heading">Select the first player.</h2>
-                <select class="form-control">
-                  <option>Player 1</option>
-                  <option>Player 2</option>
-                  <option>Player 3</option>
-                  <option>Player 4</option>
-                  <option>Player 5</option>
-                </select>
+          <div class="row jumbotron" style="margin-left:250px; margin-right:250px" ng-controller="GameControl" ng-init="showbutton=true">
+            <div class="col-lg-9 col-lg-offset-1">
+                <button id="playgame" class="btn btn-default col-sm-8 col-md-offset-2" ng-show="showbutton" ng-click="showMenuPlayer1 = true; showbutton=false">Play Game</button>
+                <div ng-show="showMenuPlayer1">
+                  <h3 class="featurette-heading col-md-offset-2">Select the first player.</h3>
+                    <select id="player1" name="selectedPlayer1" ng-model="selectedPlayer" class="col-sm-8 col-md-offset-2" ng-change="showMenuPlayer1 = false; showMenuPlayer2 = true">
+                        <option ng-repeat="player in players" value="{{player.id}}">{{player.firstName}} {{player.lastName}}</option>
+                    </select>
+                </div>
+                <div ng-show="showMenuPlayer2">
+                    <h3 class="featurette-heading col-md-offset-2">Select the second player.</h3>
+                    <select id="player2" name="selectedPlayer2" ng-model="selectedPlayer" class="col-sm-8 col-md-offset-2" ng-change="showstartbutton = true">
+                        <option ng-repeat="player in players" value="{{player.id}}">{{player.firstName}} {{player.lastName}}</option>
+                    </select>
+                </div>
+                <button id="startgame" class="btn btn-default col-sm-8 col-md-offset-2" ng-show="showstartbutton">Start Game</button>
             </div>
           </div>
 
           <hr class="featurette-divider">
           <a name="register" style="padding-top: 100px"></a>
           <div class="row jumbotron" style="margin-left:250px; margin-right:250px" ng-controller="registration">
-            <div class="col-md-8 col-md-offset-2">
-              <h2 class="featurette-heading col-md-offset-2">Add a new player</h2>
+            <div class="col-lg-9 col-lg-offset-1">
+              <h3 class="featurette-heading col-md-offset-2">Add a new player</h3>
                 <form class="form-horizontal" role="form">
                   <div class="form-group">
                     <div class="col-md-8 col-md-offset-2">

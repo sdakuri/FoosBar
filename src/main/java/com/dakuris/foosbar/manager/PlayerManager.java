@@ -2,6 +2,8 @@ package com.dakuris.foosbar.manager;
 
 import com.dakuris.foosbar.base.Player;
 
+import java.util.List;
+
 /**
  * Created by IntelliJ IDEA.
  * User: Shashidhar Dakuri
@@ -16,4 +18,6 @@ public interface PlayerManager {
     public Player getPlayer(long id);
 
     public boolean deletePlayer(long id);
+
+    List<Player> getPlayers();
 }

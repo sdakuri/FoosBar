@@ -12,7 +12,7 @@ import com.dakuris.foosbar.base.Player;
  */
 public interface GameManager {
 
-    public Game createGame(Player playerOne, Player playerTwo);
+    public Game createGame(int playerOne, int playerTwo);
 
     public Game getGame(long id);
 
