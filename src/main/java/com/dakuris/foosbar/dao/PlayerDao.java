@@ -21,20 +21,31 @@ import java.util.List;
 public class PlayerDAO extends JdbcDaoSupport {
 
     Logger log = LogManager.getLogger(PlayerDAO.class);
-    private static final String CREATE_PLAYER = "INSERT INTO player(firstname, lastname) values (?,?) ";
+    private static final String CREATE_PLAYER = "INSERT INTO player(id, firstname, lastname) values (?, ?,?) ";
     private static final String GET_PLAYER = "SELECT * FROM player WHERE id = ? ";
     private static final String GET_PLAYERS = "SELECT * FROM player ";
+    private static final String GET_ID = "SELECT MAX(id) FROM player ";
 
-    public boolean createPlayer(Player player){
+    private long getNextID(){
         try{
-            int result = getJdbcTemplate().update(CREATE_PLAYER,player.getFirstName(),player.getLastName());
+            return (getJdbcTemplate().queryForObject(GET_ID,Long.class) +1);
+        }catch (NullPointerException npe){
+            return 1001;
+        }
+    }
+
+
+    public Player createPlayer(Player player){
+        player.setId(getNextID());
+        try{
+            int result = getJdbcTemplate().update(CREATE_PLAYER, player.getId(), player.getFirstName(),player.getLastName());
             if(result==1)
-                return true;
+                return player;
             else
-                return false;
+                return null;
         }catch(Exception e){
             log.error("Error creating the player: "+e);
-            return false;
+            return null;
         }
     }
 

@@ -22,10 +22,7 @@ public class PlayerManagerImpl implements PlayerManager {
     @Override
     public Player createPlayer(String firstName, String lastName) {
         Player player = new Player(firstName, lastName);
-        if(playerDAO.createPlayer(player))
-            return player;
-        else
-            return null;
+        return playerDAO.createPlayer(player);
     }
 
     @Override

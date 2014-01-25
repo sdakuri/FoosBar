@@ -2,7 +2,7 @@
 
 var FoosBarApp = {};
 
-var App = angular.module('FoosBar',[]);
+var App = angular.module('FoosBar',['ui.bootstrap']);
 
 function registration($scope, $http){
     $scope.registerPlayer = function(player){
@@ -35,12 +35,10 @@ function GameControl($scope,$http){
     });
 
     startGame.click(function(){
-        //var url = "game/start?firstplayer="+$scope.selectedPlayer1+"&secondplayer="+$scope.selectedPlayer2;
-        //console.log(url);
+
         var players = {"firstplayer":$scope.selectedPlayer1,"secondplayer":$scope.selectedPlayer2}
         $http.post('game/start',players).success(function(game){
-            console.log(game);
-
         })
     });
 }
+

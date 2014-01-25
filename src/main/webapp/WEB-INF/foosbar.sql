@@ -21,7 +21,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 CREATE TABLE game (
-    id integer NOT NULL,
+    id bigint NOT NULL,
     playerone bigint NOT NULL,
     playertwo bigint NOT NULL,
     playeronescore integer,
@@ -31,18 +31,6 @@ CREATE TABLE game (
 
 
 ALTER TABLE public.game OWNER TO postgres;
-
-CREATE SEQUENCE game_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.game_id_seq OWNER TO postgres;
-
-ALTER SEQUENCE game_id_seq OWNED BY game.id;
 
 CREATE TABLE leaders (
     player bigint NOT NULL,
@@ -54,30 +42,13 @@ CREATE TABLE leaders (
 ALTER TABLE public.leaders OWNER TO postgres;
 
 CREATE TABLE player (
-    id integer NOT NULL,
+    id bigint NOT NULL,
     firstname character varying(20) NOT NULL,
     lastname character varying(30),
     numberofgameswon bigint
 );
 
-
 ALTER TABLE public.player OWNER TO postgres;
-
-CREATE SEQUENCE player_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.player_id_seq OWNER TO postgres;
-
-ALTER SEQUENCE player_id_seq OWNED BY player.id;
-
-ALTER TABLE game ALTER COLUMN id SET DEFAULT nextval('game_id_seq'::regclass);
-
-ALTER TABLE player ALTER COLUMN id SET DEFAULT nextval('player_id_seq'::regclass);
 
 ALTER TABLE ONLY game
     ADD CONSTRAINT game_id_pk PRIMARY KEY (id);

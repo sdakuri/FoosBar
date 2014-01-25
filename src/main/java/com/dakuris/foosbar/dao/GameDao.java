@@ -17,11 +17,26 @@ import java.util.Date;
  */
 public class GameDAO extends JdbcDaoSupport {
 
-    private static final String CREATE_GAME = "INSERT INTO game(playerone, playertwo, creationdate) VALUES (?,?,?) ";
-    private static final String GET_GAME = "SELECT * FROM game WHERE id = ? ";
 
-    public int createGame(Game game){
-        return getJdbcTemplate().update(CREATE_GAME,game.getPlayerOne(),game.getPlayerTwo(),new Date(System.currentTimeMillis()));
+
+    private static final String CREATE_GAME = "INSERT INTO game(id, playerone, playertwo, creationdate) VALUES (?, ?,?,?) ";
+    private static final String GET_GAME = "SELECT * FROM game WHERE id = ? ";
+    private static final String GET_ID = "SELECT MAX(id) FROM game ";
+
+
+    private long getNextID(){
+        try{
+            return (getJdbcTemplate().queryForObject(GET_ID,Long.class) + 1);
+        }catch (NullPointerException npe){
+            return 1001;
+        }
+    }
+
+    public Game createGame(Game game){
+        game.setId(getNextID());
+        getJdbcTemplate().update(CREATE_GAME,game.getId(), game.getPlayerOne(), game.getPlayerTwo(), new Date(System.currentTimeMillis()));
+
+        return game;
     }
 
     public Game getGame(long id){

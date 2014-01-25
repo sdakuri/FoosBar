@@ -34,10 +34,7 @@ public class GameManagerImpl implements GameManager {
 
         Game game = new Game(playerOne,playerTwo);
 
-        if(gameDao.createGame(game)>0)
-            return game;
-        else
-            return null;
+        return gameDao.createGame(game);
     }
 
     @Override
