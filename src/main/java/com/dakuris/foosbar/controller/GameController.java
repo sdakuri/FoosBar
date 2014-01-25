@@ -1,6 +1,7 @@
 package com.dakuris.foosbar.controller;
 
 import com.dakuris.foosbar.base.Game;
+import com.dakuris.foosbar.base.GameView;
 import com.dakuris.foosbar.manager.GameManager;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -25,14 +26,15 @@ public class GameController {
     GameManager gameManager;
 
     @RequestMapping(value="/start", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
-    public @ResponseBody Game startGame(@RequestBody String players){
+    public @ResponseBody
+    GameView startGame(@RequestBody String players){
         ObjectMapper mapper = new ObjectMapper();
         try {
             JsonNode node = mapper.readTree(players);
             int firstplayer = mapper.convertValue(node.get("firstplayer"),Integer.class);
             int secondplayer = mapper.convertValue(node.get("secondplayer"),Integer.class);
 
-            Game game = gameManager.createGame(firstplayer, secondplayer);
+            GameView game = gameManager.createGame(firstplayer, secondplayer);
 
             return game;
         } catch (IOException e) {

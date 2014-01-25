@@ -1,6 +1,7 @@
 package com.dakuris.foosbar.manager.impl;
 
 import com.dakuris.foosbar.base.Game;
+import com.dakuris.foosbar.base.GameView;
 import com.dakuris.foosbar.base.Player;
 import com.dakuris.foosbar.dao.GameDAO;
 import com.dakuris.foosbar.manager.GameManager;
@@ -23,18 +24,20 @@ public class GameManagerImpl implements GameManager {
     private GameDAO gameDao;
 
     @Override
-    public Game createGame(int playerOne, int playerTwo) {
+    public GameView createGame(int playerOne, int playerTwo) {
         Player firstPlayer = playerManager.getPlayer(playerOne);
         Player secondPlayer = playerManager.getPlayer(playerTwo);
 
-        if(firstPlayer==null|| secondPlayer==null)
-            return null;
-        if(firstPlayer==secondPlayer)
+        if((firstPlayer==null|| secondPlayer==null)&&firstPlayer==secondPlayer)
             return null;
 
-        Game game = new Game(playerOne,playerTwo);
+        GameView game = new GameView(playerOne,playerTwo);
+        game.setPlayerOneFullname(firstPlayer.getFirstName()+" "+firstPlayer.getLastName());
+        game.setPlayerTwoFullName(secondPlayer.getFirstName()+ " "+secondPlayer.getLastName());
 
-        return gameDao.createGame(game);
+        gameDao.createGame(game);
+
+        return game;
     }
 
     @Override

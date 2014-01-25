@@ -38,6 +38,7 @@ function GameControl($scope,$http){
 
         var players = {"firstplayer":$scope.selectedPlayer1,"secondplayer":$scope.selectedPlayer2}
         $http.post('game/start',players).success(function(game){
+            console.log(game);
         })
     });
 }

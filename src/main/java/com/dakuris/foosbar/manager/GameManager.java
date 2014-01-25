@@ -1,6 +1,7 @@
 package com.dakuris.foosbar.manager;
 
 import com.dakuris.foosbar.base.Game;
+import com.dakuris.foosbar.base.GameView;
 import com.dakuris.foosbar.base.Player;
 
 /**
@@ -12,7 +13,7 @@ import com.dakuris.foosbar.base.Player;
  */
 public interface GameManager {
 
-    public Game createGame(int playerOne, int playerTwo);
+    public GameView createGame(int playerOne, int playerTwo);
 
     public Game getGame(long id);
 

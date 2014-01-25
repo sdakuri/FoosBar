@@ -1,6 +1,7 @@
 package com.dakuris.foosbar.dao;
 
 import com.dakuris.foosbar.base.Game;
+import com.dakuris.foosbar.base.GameView;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
@@ -20,8 +21,13 @@ public class GameDAO extends JdbcDaoSupport {
 
 
     private static final String CREATE_GAME = "INSERT INTO game(id, playerone, playertwo, creationdate) VALUES (?, ?,?,?) ";
-    private static final String GET_GAME = "SELECT * FROM game WHERE id = ? ";
+    private static final String GET_GAME = "SELECT * FROM game g LEFT JOIN   WHERE id = ? ";
     private static final String GET_ID = "SELECT MAX(id) FROM game ";
+    private static final String GET_GAME_VIEW = "SELECT g.id, g.playerone, g.playertwo, g.playeronescore, g.playertwoscore, " +
+                        "p1.firstname ||' '|| p1.lastname AS playeronename, p2.firstname ||' '|| p2.lastname AS playertwoname FROM game g " +
+                        "LEFT JOIN player p1 ON g.playerone=p1.id " +
+                        "LEFT JOIN player p2 ON g.playertwo =p2.id ";
+
 
 
     private long getNextID(){
@@ -32,30 +38,32 @@ public class GameDAO extends JdbcDaoSupport {
         }
     }
 
-    public Game createGame(Game game){
+    public GameView createGame(GameView game){
         game.setId(getNextID());
         getJdbcTemplate().update(CREATE_GAME,game.getId(), game.getPlayerOne(), game.getPlayerTwo(), new Date(System.currentTimeMillis()));
 
         return game;
     }
 
-    public Game getGame(long id){
-        return getJdbcTemplate().queryForObject(GET_GAME,rowMapper, id);
+    public GameView getGame(long id){
+        return getJdbcTemplate().queryForObject(GET_GAME_VIEW,rowMapper, id);
     }
 
     public boolean deleteGame(long id){
         return false;
     }
 
-    private ParameterizedRowMapper<Game> rowMapper = new ParameterizedRowMapper<Game>() {
+    private ParameterizedRowMapper<GameView> rowMapper = new ParameterizedRowMapper<GameView>() {
         @Override
-        public Game mapRow(ResultSet resultSet, int i) throws SQLException {
-            Game game = new Game();
+        public GameView mapRow(ResultSet resultSet, int i) throws SQLException {
+            GameView game = new GameView();
             game.setId(resultSet.getLong("id"));
             game.setPlayerOne(resultSet.getInt("playerone"));
             game.setPlayerTwo(resultSet.getInt("playertwo"));
             game.setPlayerOneScore(resultSet.getInt("playeronescore"));
             game.setPlayerTwoScore(resultSet.getInt("playertwoscore"));
+            game.setPlayerOneFullname(resultSet.getString("playeronename"));
+            game.setPlayerOneFullname(resultSet.getString("playertwoname"));
 
             return game;
         }
