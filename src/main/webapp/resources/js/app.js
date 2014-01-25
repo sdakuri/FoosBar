@@ -2,7 +2,7 @@
 
 var FoosBarApp = {};
 
-var App = angular.module('FoosBarApp');
+var App = angular.module('FoosBarApp',[]);
 
 App.config(['$routeProvider', function ($routeProvider) {
     $routeProvider.when('#register', {
