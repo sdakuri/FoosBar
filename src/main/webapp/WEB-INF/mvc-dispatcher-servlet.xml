@@ -30,4 +30,27 @@
         <property name="password" value="${jdbc.password}" />
     </bean>
 
+    <bean id="playerManager" class="com.dakuris.foosbar.manager.impl.PlayerManagerImpl">
+    </bean>
+
+    <bean id="gameManager" class="com.dakuris.foosbar.manager.impl.GameManagerImpl">
+
+    </bean>
+
+    <bean id="leaderboardManager" class="com.dakuris.foosbar.manager.impl.LeaderBoardManagerImpl">
+
+    </bean>
+
+    <bean id="playerDAO" class="com.dakuris.foosbar.dao.PlayerDAO">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <bean id="gameDAO" class="com.dakuris.foosbar.dao.GameDAO">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <bean id="leaderboardDAO" class="com.dakuris.foosbar.dao.LeaderBoardDAO">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
 </beans>

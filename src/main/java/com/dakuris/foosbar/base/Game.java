@@ -1,5 +1,7 @@
 package com.dakuris.foosbar.base;
 
+import java.io.Serializable;
+
 /**
  * Created by IntelliJ IDEA.
  * User: Shashidhar Dakuri
@@ -7,7 +9,7 @@ package com.dakuris.foosbar.base;
  * Date: 1/23/14
  * Time: 3:04 PM
  */
-public class Game {
+public class Game implements Serializable {
 
     private long id;
     private Player playerOne;

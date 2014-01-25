@@ -1,4 +1,4 @@
-package com.dakuris.foosbar;
+package com.dakuris.foosbar.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -7,10 +7,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 @RequestMapping("/")
-public class HelloController {
+public class HomePageController {
 	@RequestMapping(method = RequestMethod.GET)
-	public String printWelcome(ModelMap model) {
-		model.addAttribute("message", "Hello world!");
-		return "hello";
+	public String getIndex() {
+		return "index";
 	}
 }

@@ -1,7 +1,14 @@
 package com.dakuris.foosbar.dao;
 
 import com.dakuris.foosbar.base.Player;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * Created by IntelliJ IDEA.
@@ -12,17 +19,47 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
  */
 public class PlayerDAO extends JdbcDaoSupport {
 
-    private static final String CREATE_PLAYER = "";
+    Logger log = LogManager.getLogger(PlayerDAO.class);
+    private static final String CREATE_PLAYER = "INSERT INTO player(firstname, lastname) values (?,?) ";
+    private static final String GET_PLAYER = "SELECT * FROM player WHERE id = ? ";
 
-    public Player createPlayer(Player player){
-        return null;
+    public boolean createPlayer(Player player){
+        try{
+            int result = getJdbcTemplate().update(CREATE_PLAYER,player.getFirstName(),player.getLastName());
+            if(result==1)
+                return true;
+            else
+                return false;
+        }catch(Exception e){
+            log.error("Error creating the player: "+e);
+            return false;
+        }
     }
 
     public Player getPlayer(long id){
-        return null;
+        Player player = null;
+        try{
+            player = getJdbcTemplate().queryForObject(GET_PLAYER,playerParameterizedRowMapper,id);
+        }catch (Exception e){
+            log.error("Error retrieving the player with id "+id+ " and the error is: "+e);
+        }
+        return player;
     }
 
     public boolean deletePlayer(long id){
-        return false;
+        return true;
     }
+
+    private ParameterizedRowMapper<Player> playerParameterizedRowMapper
+            = new ParameterizedRowMapper<Player>() {
+        @Override
+        public Player mapRow(ResultSet rs, int rowNum) throws SQLException {
+            Player player = new Player();
+            player.setId(rs.getInt("id"));
+            player.setFirstName(rs.getString("firstname"));
+            player.setLastName(rs.getString("lastname"));
+            player.setNumberOfGamesWon(rs.getInt("numberofgameswon"));
+            return player;
+        }
+    };
 }

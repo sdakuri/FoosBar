@@ -3,6 +3,7 @@ package com.dakuris.foosbar.manager.impl;
 import com.dakuris.foosbar.base.Player;
 import com.dakuris.foosbar.dao.PlayerDAO;
 import com.dakuris.foosbar.manager.PlayerManager;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Created by IntelliJ IDEA.
@@ -13,22 +14,25 @@ import com.dakuris.foosbar.manager.PlayerManager;
  */
 public class PlayerManagerImpl implements PlayerManager {
 
+    @Autowired
     private PlayerDAO playerDAO;
 
     @Override
     public Player createPlayer(String firstName, String lastName) {
         Player player = new Player(firstName, lastName);
-
-        return null;
+        if(playerDAO.createPlayer(player))
+            return player;
+        else
+            return null;
     }
 
     @Override
     public Player getPlayer(long id) {
-        return null;
+        return playerDAO.getPlayer(id);
     }
 
     @Override
     public boolean deletePlayer(long id) {
-        return false;
+        return playerDAO.deletePlayer(id);
     }
 }

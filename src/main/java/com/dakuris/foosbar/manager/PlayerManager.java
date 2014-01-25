@@ -11,9 +11,9 @@ import com.dakuris.foosbar.base.Player;
  */
 public interface PlayerManager {
 
-    public Player createPlayer(String firstName, String lastName) throws Exception;
+    public Player createPlayer(String firstName, String lastName);
 
-    public Player getPlayer(long id) throws Exception;
+    public Player getPlayer(long id);
 
-    public boolean deletePlayer(long id) throws Exception;
+    public boolean deletePlayer(long id);
 }
