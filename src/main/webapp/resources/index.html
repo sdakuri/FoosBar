@@ -129,7 +129,7 @@
                         <option ng-repeat="player in players" value="{{player.id}}">{{player.firstName}} {{player.lastName}}</option>
                     </select>
                 </div>
-                <button id="startgame" class="btn btn-default col-sm-8 col-md-offset-2" ng-show="showstartbutton">Start Game</button>
+                <button id="startgame" class="btn btn-default col-sm-8 col-md-offset-2" ng-click="openmodal()"  ng-show="showstartbutton">Start Game</button>
             </div>
           </div>
 

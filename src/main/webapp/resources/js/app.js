@@ -13,13 +13,16 @@ function registration($scope, $http){
     }
 }
 
-function GameControl($scope,$http){
+function GameControl($scope,$http,$modal){
     $scope.selectedPlayer1 = null;
     $scope.selectedPlayer2 = null;
     var playGame = $('#playgame')
     var startGame = $('#startgame')
     var firstPlayer = $('#player1')
     var secondPlayer = $('#player2')
+
+    $scope.game = null;
+
     playGame.click(function(){
         $http.get('player/all').success(function(players){
             $scope.players = players;
@@ -38,8 +41,35 @@ function GameControl($scope,$http){
 
         var players = {"firstplayer":$scope.selectedPlayer1,"secondplayer":$scope.selectedPlayer2}
         $http.post('game/start',players).success(function(game){
-            console.log(game);
+            $scope.game = game;
+            var modalInstance = $modal.open({
+                templateUrl: 'modal.html',
+                controller: ModalInstanceCtrl,
+                resolve:{
+                    game: function(){
+                        console.log("1")
+                        return $scope.game;
+                    }
+                }
+            });
         })
     });
+
+    $scope.openmodal = function(){
+
+    }
 }
 
+
+var ModalInstanceCtrl = function($scope, $modalInstance, game){
+
+    $scope.game = game;
+    console.log($scope.game)
+    $scope.ok = function(){
+        $modalInstance.close();
+    };
+
+//    $scope.cancel = function(){
+    //      $modalInstance.dismiss('cancel');
+    //}
+}
