@@ -1,7 +1,3 @@
-CREATE DATABASE foosbar WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'C' LC_CTYPE = 'C';
-
-ALTER DATABASE foosbar OWNER TO postgres;
-
 SET statement_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = off;
@@ -68,6 +64,27 @@ ALTER TABLE ONLY game
 
 ALTER TABLE ONLY game
     ADD CONSTRAINT player_two_fk FOREIGN KEY (playertwo) REFERENCES player(id);
+
+CREATE FUNCTION upsert_leaderboard(playerid INT) RETURNS VOID AS
+$$
+BEGIN
+    LOOP
+        UPDATE leaders SET gameswon = gameswon + 1 WHERE player = playerid;
+        IF found THEN
+            RETURN;
+        END IF;
+        BEGIN
+            INSERT INTO leaders(player, type, gameswon) VALUES (playerid, 'MONTHLY',1);
+            INSERT INTO leaders(player, type, gameswon) VALUES (playerid, 'QUATERLY',1);
+            INSERT INTO leaders(player, type, gameswon) VALUES (playerid, 'YEARLY',1);
+            INSERT INTO leaders(player, type, gameswon) VALUES (playerid, 'ALLTIME',1);
+            RETURN;
+        EXCEPTION WHEN unique_violation THEN
+        END;
+    END LOOP;
+END;
+$$
+LANGUAGE plpgsql;
 
 REVOKE ALL ON SCHEMA public FROM PUBLIC;
 REVOKE ALL ON SCHEMA public FROM postgres;

@@ -38,20 +38,34 @@ public class GameController {
 
             return game;
         } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
             return null;
         }
 
     }
 
-    @RequestMapping(value="/start", method = RequestMethod.GET, produces = "application/json")
+    /*@RequestMapping(value="/start", method = RequestMethod.GET, produces = "application/json")
     public @ResponseBody Game startGame1(@RequestParam(value = "firstplayer") int playerOne, @RequestParam(value = "secondplayer") int playerTwo){
 
-
             Game game = gameManager.createGame(playerOne, playerTwo);
-
             return game;
+    }*/
 
+    @RequestMapping(value="/point", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    public @ResponseBody
+    GameView assignPoint(@RequestBody String point){
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+                JsonNode node = mapper.readTree(point);
+                long gameid = mapper.convertValue(node.get("gameid"),Long.class);
+                int playerid = mapper.convertValue(node.get("playerid"),Integer.class);
 
+                GameView game = gameManager.assignPoint(gameid, playerid);
+
+                return game;
+            } catch (IOException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                return null;
+            }
     }
 }

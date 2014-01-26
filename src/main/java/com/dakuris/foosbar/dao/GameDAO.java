@@ -1,12 +1,13 @@
 package com.dakuris.foosbar.dao;
 
-import com.dakuris.foosbar.base.Game;
 import com.dakuris.foosbar.base.GameView;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Date;
 
 /**
@@ -26,9 +27,9 @@ public class GameDAO extends JdbcDaoSupport {
     private static final String GET_GAME_VIEW = "SELECT g.id, g.playerone, g.playertwo, g.playeronescore, g.playertwoscore, " +
                         "p1.firstname ||' '|| p1.lastname AS playeronename, p2.firstname ||' '|| p2.lastname AS playertwoname FROM game g " +
                         "LEFT JOIN player p1 ON g.playerone=p1.id " +
-                        "LEFT JOIN player p2 ON g.playertwo =p2.id ";
-
-
+                        "LEFT JOIN player p2 ON g.playertwo =p2.id WHERE g.id = ? ";
+    private static final String ADD_POINTS = "UPDATE game SET playeronescore = ?, playertwoscore =? WHERE id = ?";
+    private static final String UPSERT_LEADERBOARD = "SELECT upsert_leaderboard(?)";
 
     private long getNextID(){
         try{
@@ -53,6 +54,15 @@ public class GameDAO extends JdbcDaoSupport {
         return false;
     }
 
+    public int updatePoints(long id, int playerOneScore, int playerTwoScore) {
+        return getJdbcTemplate().update(ADD_POINTS, playerOneScore, playerTwoScore, id);
+    }
+
+    public void upsertLeaders(int playerid){
+        String sql = "SELECT upsert_leaderboard("+playerid+")";
+        getJdbcTemplate().queryForRowSet(sql);
+    }
+
     private ParameterizedRowMapper<GameView> rowMapper = new ParameterizedRowMapper<GameView>() {
         @Override
         public GameView mapRow(ResultSet resultSet, int i) throws SQLException {
@@ -62,10 +72,11 @@ public class GameDAO extends JdbcDaoSupport {
             game.setPlayerTwo(resultSet.getInt("playertwo"));
             game.setPlayerOneScore(resultSet.getInt("playeronescore"));
             game.setPlayerTwoScore(resultSet.getInt("playertwoscore"));
-            game.setPlayerOneFullname(resultSet.getString("playeronename"));
-            game.setPlayerOneFullname(resultSet.getString("playertwoname"));
+            game.setPlayerOneFullName(resultSet.getString("playeronename"));
+            game.setPlayerTwoFullName(resultSet.getString("playertwoname"));
 
             return game;
         }
     };
+
 }

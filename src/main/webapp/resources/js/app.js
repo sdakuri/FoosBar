@@ -47,29 +47,67 @@ function GameControl($scope,$http,$modal){
                 controller: ModalInstanceCtrl,
                 resolve:{
                     game: function(){
-                        console.log("1")
                         return $scope.game;
                     }
                 }
             });
         })
     });
-
-    $scope.openmodal = function(){
-
-    }
 }
 
 
-var ModalInstanceCtrl = function($scope, $modalInstance, game){
+var ModalInstanceCtrl = function($modal, $scope, $modalInstance, game, $http){
 
     $scope.game = game;
-    console.log($scope.game)
     $scope.ok = function(){
         $modalInstance.close();
     };
 
-//    $scope.cancel = function(){
-    //      $modalInstance.dismiss('cancel');
-    //}
+    $scope.playerOnePoint = function(){
+        console.log("Player 1 point")
+        var playerOnePoint = {"gameid":game.id, "playerid":game.playerOne}
+        $http.post('game/point', playerOnePoint).success(function(game){
+            $scope.game = game;
+            if(game.playerOneScore===5){
+                $modal.open({
+                    templateUrl: "winner.html",
+                    controller: ModalWinnerInstanceCtrl,
+                    resolve:{
+                        winner: function(){
+                            return game.playerOneFullName;
+                        }
+                    }
+                });
+                $modalInstance.close();
+            }
+
+        });
+    }
+
+    $scope.playerTwoPoint = function(){
+        console.log("Player 2 point")
+        var playerTwoPoint = {"gameid":game.id, "playerid":game.playerTwo}
+        $http.post('game/point', playerTwoPoint).success(function(game){
+            $scope.game = game;
+            if(game.playerTwoScore===5){
+                $modal.open({
+                        templateUrl: "winner.html",
+                        controller: ModalWinnerInstanceCtrl,
+                        resolve:{
+                            winner: function(){
+                                return game.playerTwoFullName;
+                            }
+                        }
+                    });
+                $modalInstance.close();
+            }
+        });
+    }
+}
+
+var ModalWinnerInstanceCtrl = function($scope, $modalInstance, winner){
+    $scope.winner = winner;
+    setTimeout(function(){
+        $modalInstance.close();
+    },2000);
 }

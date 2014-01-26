@@ -6016,12 +6016,13 @@ button.close {
 
 .modal-title {
   margin: 0;
+  text-align: center;
   line-height: 1.428571429;
 }
 
 .modal-body {
   position: relative;
-  padding: 20px;
+  padding: 30px;
 }
 
 .modal-footer {

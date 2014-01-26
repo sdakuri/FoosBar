@@ -32,7 +32,7 @@ public class GameManagerImpl implements GameManager {
             return null;
 
         GameView game = new GameView(playerOne,playerTwo);
-        game.setPlayerOneFullname(firstPlayer.getFirstName()+" "+firstPlayer.getLastName());
+        game.setPlayerOneFullName(firstPlayer.getFirstName() + " " + firstPlayer.getLastName());
         game.setPlayerTwoFullName(secondPlayer.getFirstName()+ " "+secondPlayer.getLastName());
 
         gameDao.createGame(game);
@@ -41,8 +41,27 @@ public class GameManagerImpl implements GameManager {
     }
 
     @Override
-    public Game getGame(long id) {
+    public GameView getGame(long id) {
         return gameDao.getGame(id);
+    }
+
+    @Override
+    public GameView assignPoint(long gameid, int player) {
+        GameView game = getGame(gameid);
+        if(game.getPlayerOne()==player)
+            game.setPlayerOneScore(game.getPlayerOneScore()+1);
+        else
+            game.setPlayerTwoScore(game.getPlayerTwoScore()+1);
+
+        int result = gameDao.updatePoints(game.getId(), game.getPlayerOneScore(), game.getPlayerTwoScore());
+
+        if(game.getPlayerOneScore()==5 || game.getPlayerTwoScore()==5)
+            gameDao.upsertLeaders(player);
+
+        if(result == 1)
+            return game;
+        else
+            return null;
     }
 
     @Override

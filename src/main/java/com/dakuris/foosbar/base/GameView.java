@@ -9,7 +9,7 @@ package com.dakuris.foosbar.base;
  */
 public class GameView  extends Game{
 
-    private String playerOneFullname;
+    private String playerOneFullName;
     private String playerTwoFullName;
 
     public GameView(){}
@@ -18,12 +18,12 @@ public class GameView  extends Game{
         super(playerOne,playerTwo);
     }
 
-    public String getPlayerOneFullname() {
-        return playerOneFullname;
+    public String getPlayerOneFullName() {
+        return playerOneFullName;
     }
 
-    public void setPlayerOneFullname(String playerOneFullname) {
-        this.playerOneFullname = playerOneFullname;
+    public void setPlayerOneFullName(String playerOneFullName) {
+        this.playerOneFullName = playerOneFullName;
     }
 
     public String getPlayerTwoFullName() {
