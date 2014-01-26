@@ -13,7 +13,7 @@ import com.dakuris.foosbar.base.Player;
  */
 public interface GameManager {
 
-    public GameView createGame(int playerOne, int playerTwo);
+    public GameView createGame(long playerOne, long playerTwo);
 
     public Game getGame(long id);
 
@@ -22,4 +22,6 @@ public interface GameManager {
     GameView assignPoint(long gameid, int player);
 
     void endGame(long gameid);
+
+    public GameView createGame(long firstPlayerID, int firstPlayerScore, long secondPlayerID, int secondPlayerScore);
 }

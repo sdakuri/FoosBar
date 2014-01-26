@@ -20,4 +20,6 @@ public interface PlayerManager {
     public boolean deletePlayer(long id);
 
     List<Player> getPlayers();
+
+    Player getPlayer(String firstPlayerName, String s);
 }

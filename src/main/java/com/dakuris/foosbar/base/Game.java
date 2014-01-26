@@ -12,14 +12,14 @@ import java.io.Serializable;
 public class Game implements Serializable {
 
     private long id;
-    private int playerOne;
-    private int playerTwo;
+    private long playerOne;
+    private long playerTwo;
     private int playerOneScore;
     private int playerTwoScore;
 
     public Game(){};
 
-    public Game(int playerOne, int playerTwo){
+    public Game(long playerOne, long playerTwo){
         this.playerOne = playerOne;
         this.playerTwo = playerTwo;
     }
@@ -32,19 +32,19 @@ public class Game implements Serializable {
         this.id = id;
     }
 
-    public int getPlayerOne() {
+    public long getPlayerOne() {
         return playerOne;
     }
 
-    public void setPlayerOne(int playerOne) {
+    public void setPlayerOne(long playerOne) {
         this.playerOne = playerOne;
     }
 
-    public int getPlayerTwo() {
+    public long getPlayerTwo() {
         return playerTwo;
     }
 
-    public void setPlayerTwo(int playerTwo) {
+    public void setPlayerTwo(long playerTwo) {
         this.playerTwo = playerTwo;
     }
 

@@ -14,7 +14,7 @@ public class GameView  extends Game{
 
     public GameView(){}
 
-    public GameView(int playerOne, int playerTwo) {
+    public GameView(long playerOne, long playerTwo) {
         super(playerOne,playerTwo);
     }
 

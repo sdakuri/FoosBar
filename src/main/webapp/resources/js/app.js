@@ -2,7 +2,7 @@
 
 var FoosBarApp = {};
 
-var App = angular.module('FoosBar',['ui.bootstrap']);
+var App = angular.module('FoosBar',['ui.bootstrap','angularFileUpload']);
 
 function registration($scope, $http){
     $scope.registerPlayer = function(player){
@@ -67,7 +67,6 @@ var ModalInstanceCtrl = function($modal, $scope, $modalInstance, game, $http){
     };
 
     $scope.playerOnePoint = function(){
-        console.log("Player 1 point")
         var playerOnePoint = {"gameid":game.id, "playerid":game.playerOne}
         $http.post('game/point', playerOnePoint).success(function(game){
             $scope.game = game;
@@ -88,7 +87,6 @@ var ModalInstanceCtrl = function($modal, $scope, $modalInstance, game, $http){
     }
 
     $scope.playerTwoPoint = function(){
-        console.log("Player 2 point")
         var playerTwoPoint = {"gameid":game.id, "playerid":game.playerTwo}
         $http.post('game/point', playerTwoPoint).success(function(game){
             $scope.game = game;
@@ -140,6 +138,17 @@ function AllTimeLeaderBoardControl($scope,$http){
     });
 }
 
-var FileUploader = function($scope, $http){
+var FileUploader = function($scope, $upload){
+
+    $scope.onFileSelect = function($files){
+        $scope.upload = $upload.upload({
+            url: '/upload',
+            file: $files[0]
+          }).progress(function(evt) {
+            console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+          }).success(function(data, status, headers, config) {
+            console.log(data);
+          });
+    }
 
 };

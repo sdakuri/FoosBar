@@ -154,15 +154,9 @@
           <hr class="featurette-divider">
             <a name="upload" style="padding-top: 100px"></a>
             <form name="uploadForm" ng-controller="FileUploader" >
-                <input ng-model='file' type="file"/>
+                <input id="fileupload" type="file" ng-file-select="onFileSelect($files)"/>
                 <input type="button" value="Upload" ng-click="uploadFile()"/>
             </form>
-            <div ng-show="progressVisible">
-                <div class="percent">{{progress}}%</div>
-                <div class="progress-bar">
-                    <div class="uploaded" ng-style="{'width': progress+'%'}"></div>
-                </div>
-            </div>
 
           <hr class="featurette-divider">
 
@@ -185,6 +179,7 @@
         <script src="js/lib/angular-ui.min.js"></script>
         <script src="js/lib/bootstrap.min.js"></script>
         <script src="js/lib/bootstrap-dropdown.min.js" ></script>
+        <script src="js/lib/angular-fileupload.min.js"></script>
         <script src="js/app.js"></script>
   </body>
 </html>

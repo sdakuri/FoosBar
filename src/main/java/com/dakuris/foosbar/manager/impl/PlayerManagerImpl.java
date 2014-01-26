@@ -36,6 +36,11 @@ public class PlayerManagerImpl implements PlayerManager {
     }
 
     @Override
+    public Player getPlayer(String firstPlayerName, String s) {
+        return playerDAO.getPlayer(firstPlayerName,s);
+    }
+
+    @Override
     public boolean deletePlayer(long id) {
         return playerDAO.deletePlayer(id);
     }

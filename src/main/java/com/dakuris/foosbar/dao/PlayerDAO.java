@@ -3,6 +3,7 @@ package com.dakuris.foosbar.dao;
 import com.dakuris.foosbar.base.Player;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
@@ -25,6 +26,7 @@ public class PlayerDAO extends JdbcDaoSupport {
     private static final String GET_PLAYER = "SELECT * FROM player WHERE id = ? ";
     private static final String GET_PLAYERS = "SELECT * FROM player ";
     private static final String GET_ID = "SELECT MAX(id) FROM player ";
+    private static final String GET_PLAYER_FIRSTNAME_LASTNAME = "SELECT * FROM player WHERE firstname = ? AND lastname = ? ";
 
     private long getNextID(){
         try{
@@ -59,6 +61,15 @@ public class PlayerDAO extends JdbcDaoSupport {
         return player;
     }
 
+    public Player getPlayer(String firstPlayerName, String s) {
+
+        try{
+            return getJdbcTemplate().queryForObject(GET_PLAYER_FIRSTNAME_LASTNAME,playerParameterizedRowMapper,firstPlayerName,s);
+        }catch (EmptyResultDataAccessException e){
+            return null;
+        }
+    }
+
     public boolean deletePlayer(long id){
         return true;
     }
@@ -79,4 +90,6 @@ public class PlayerDAO extends JdbcDaoSupport {
             return player;
         }
     };
+
+
 }

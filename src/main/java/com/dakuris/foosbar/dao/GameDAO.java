@@ -21,7 +21,7 @@ public class GameDAO extends JdbcDaoSupport {
 
 
 
-    private static final String CREATE_GAME = "INSERT INTO game(id, playerone, playertwo, creationdate) VALUES (?, ?,?,?) ";
+    private static final String CREATE_GAME = "INSERT INTO game(id, playerone, playertwo, playeronescore, playertwoscore, creationdate) VALUES (?, ?, ?, ?, ?, ?) ";
     private static final String GET_GAME = "SELECT * FROM game g LEFT JOIN   WHERE id = ? ";
     private static final String GET_ID = "SELECT MAX(id) FROM game ";
     private static final String GET_GAME_VIEW = "SELECT g.id, g.playerone, g.playertwo, g.playeronescore, g.playertwoscore, " +
@@ -41,7 +41,7 @@ public class GameDAO extends JdbcDaoSupport {
 
     public GameView createGame(GameView game){
         game.setId(getNextID());
-        getJdbcTemplate().update(CREATE_GAME,game.getId(), game.getPlayerOne(), game.getPlayerTwo(), new Date(System.currentTimeMillis()));
+        getJdbcTemplate().update(CREATE_GAME,game.getId(), game.getPlayerOne(), game.getPlayerTwo(),game.getPlayerOneScore(),game.getPlayerTwoScore(), new Date(System.currentTimeMillis()));
 
         return game;
     }
@@ -58,7 +58,7 @@ public class GameDAO extends JdbcDaoSupport {
         return getJdbcTemplate().update(ADD_POINTS, playerOneScore, playerTwoScore, id);
     }
 
-    public void upsertLeaders(int playerid){
+    public void upsertLeaders(long playerid){
         String sql = "SELECT upsert_leaderboard("+playerid+")";
         getJdbcTemplate().queryForRowSet(sql);
     }

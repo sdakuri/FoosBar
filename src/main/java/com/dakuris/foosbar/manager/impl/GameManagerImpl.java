@@ -24,7 +24,7 @@ public class GameManagerImpl implements GameManager {
     private GameDAO gameDao;
 
     @Override
-    public GameView createGame(int playerOne, int playerTwo) {
+    public GameView createGame(long playerOne, long playerTwo) {
         Player firstPlayer = playerManager.getPlayer(playerOne);
         Player secondPlayer = playerManager.getPlayer(playerTwo);
 
@@ -38,6 +38,15 @@ public class GameManagerImpl implements GameManager {
         gameDao.createGame(game);
 
         return game;
+    }
+
+    @Override
+    public GameView createGame(long firstPlayerID, int firstPlayerScore, long secondPlayerID, int secondPlayerScore) {
+        GameView game = new GameView(firstPlayerID, secondPlayerID);
+        game.setPlayerOneScore(firstPlayerScore);
+        game.setPlayerTwoScore(secondPlayerScore);
+
+        return gameDao.createGame(game);
     }
 
     @Override
