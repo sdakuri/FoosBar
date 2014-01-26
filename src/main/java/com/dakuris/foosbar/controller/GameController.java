@@ -4,6 +4,7 @@ import com.dakuris.foosbar.base.Game;
 import com.dakuris.foosbar.base.GameView;
 import com.dakuris.foosbar.manager.GameManager;
 import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.JsonProcessingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -44,13 +45,6 @@ public class GameController {
 
     }
 
-    /*@RequestMapping(value="/start", method = RequestMethod.GET, produces = "application/json")
-    public @ResponseBody Game startGame1(@RequestParam(value = "firstplayer") int playerOne, @RequestParam(value = "secondplayer") int playerTwo){
-
-            Game game = gameManager.createGame(playerOne, playerTwo);
-            return game;
-    }*/
-
     @RequestMapping(value="/point", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public @ResponseBody
     GameView assignPoint(@RequestBody String point){
@@ -67,5 +61,20 @@ public class GameController {
                 e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
                 return null;
             }
+    }
+
+    @RequestMapping(value="/end", method = RequestMethod.POST, consumes = "application/json")
+    public @ResponseBody void endGame(@RequestBody String game){
+        ObjectMapper mapper = new ObjectMapper();
+        try{
+            JsonNode node = mapper.readTree(game);
+            long gameid = mapper.convertValue(node.get("gameid"),Long.class);
+
+            gameManager.endGame(gameid);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

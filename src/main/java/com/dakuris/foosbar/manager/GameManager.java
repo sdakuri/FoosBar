@@ -20,4 +20,6 @@ public interface GameManager {
     public Game deleteGame(long id);
 
     GameView assignPoint(long gameid, int player);
+
+    void endGame(long gameid);
 }

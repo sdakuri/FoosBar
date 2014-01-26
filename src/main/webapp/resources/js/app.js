@@ -60,7 +60,10 @@ var ModalInstanceCtrl = function($modal, $scope, $modalInstance, game, $http){
 
     $scope.game = game;
     $scope.ok = function(){
-        $modalInstance.close();
+        var gameid = {"gameid":game.id};
+        $http.post('game/end',gameid).success(function(){
+            $modalInstance.close();
+        })
     };
 
     $scope.playerOnePoint = function(){

@@ -65,6 +65,16 @@ public class GameManagerImpl implements GameManager {
     }
 
     @Override
+    public void endGame(long gameid) {
+        Game game = getGame(gameid);
+
+        if(game.getPlayerOneScore()>game.getPlayerTwoScore())
+            gameDao.upsertLeaders(game.getPlayerOne());
+        else
+            gameDao.upsertLeaders(game.getPlayerTwo());
+    }
+
+    @Override
     public Game deleteGame(long id) {
         return null;
     }
