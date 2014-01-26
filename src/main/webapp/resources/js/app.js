@@ -139,3 +139,7 @@ function AllTimeLeaderBoardControl($scope,$http){
         $scope.alltimeleaders = leaders
     });
 }
+
+var FileUploader = function($scope, $http){
+
+};
