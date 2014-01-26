@@ -116,17 +116,26 @@ var ModalWinnerInstanceCtrl = function($scope, $modalInstance, winner){
 }
 
 function MonthlyLeaderBoardControl($scope,$http){
-
+    $http.get('leaders/monthly').success(function(leaders){
+        $scope.monthlyleaders = leaders;
+        $scope.loading = false;
+    });
 }
 
 function QuarterlyLeaderBoardControl($scope,$http){
-
+    $http.get('leaders/quarterly').success(function(leaders){
+        $scope.quarterlyleaders = leaders
+    });
 }
 
 function YearlyLeaderBoardControl($scope,$http){
-
+    $http.get('leaders/yearly').success(function(leaders){
+        $scope.yearlyleaders = leaders
+    });
 }
 
 function AllTimeLeaderBoardControl($scope,$http){
-
+    $http.get('leaders/alltime').success(function(leaders){
+        $scope.alltimeleaders = leaders
+    });
 }

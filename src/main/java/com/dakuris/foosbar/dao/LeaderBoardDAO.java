@@ -19,22 +19,22 @@ public class LeaderBoardDAO  extends JdbcDaoSupport {
 
     private static final String GET_MONTHLY_LEADERS = "SELECT p.firstname, p.lastname, l.gameswon FROM leaders l\n" +
                             "LEFT JOIN player P ON p.id = l.player\n" +
-                            "WHERE l.type='MONTHLY'\n" +
+                            "WHERE l.type='MONTHLY' AND l.gameswon>0 \n" +
                             "ORDER BY l.gameswon DESC\n" +
                             "LIMIT 5";
     private static final String GET_QUATERLY_LEADERS = "SELECT p.firstname, p.lastname, l.gameswon FROM leaders l\n" +
                             "LEFT JOIN player P ON p.id = l.player\n" +
-                            "WHERE l.type='QUARTERLY'\n" +
+                            "WHERE l.type='QUARTERLY' AND l.gameswon>0 \n" +
                             "ORDER BY l.gameswon DESC\n" +
                             "LIMIT 5";
     private static final String GET_YEARLY_LEADERS = "SELECT p.firstname, p.lastname, l.gameswon FROM leaders l\n" +
                             "LEFT JOIN player P ON p.id = l.player\n" +
-                            "WHERE l.type='YEARLY'\n" +
+                            "WHERE l.type='YEARLY' AND l.gameswon>0 \n" +
                             "ORDER BY l.gameswon DESC\n" +
                             "LIMIT 5";
     private static final String GET_ALL_TIME_LEADERS = "SELECT p.firstname, p.lastname, l.gameswon FROM leaders l\n" +
                             "LEFT JOIN player P ON p.id = l.player\n" +
-                            "WHERE l.type='ALLTIME'\n" +
+                            "WHERE l.type='ALLTIME' AND l.gameswon>0 \n" +
                             "ORDER BY l.gameswon DESC\n" +
                             "LIMIT 5";
 

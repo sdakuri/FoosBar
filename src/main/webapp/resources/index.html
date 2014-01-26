@@ -46,10 +46,10 @@
                     </div>
                     <div class="panel-body">
                         <ul class="list-group">
-                          <li class="list-group-item">
-                            <span class="badge">14</span>
-                            Player One
-                          </li>
+                            <li class="list-group-item" ng-repeat="leader in monthlyleaders">
+                                <span class="badge">{{leader.numberOfGamesWon}}</span>
+                                {{leader.firstName}} {{leader.lastName}}
+                            </li>
                         </ul>
                     <p><a class="btn btn-default" href="#" role="button">View all &raquo;</a></p>
                     </div>
@@ -62,10 +62,10 @@
                     </div>
                     <div class="panel-body">
                         <ul class="list-group">
-                          <li class="list-group-item">
-                            <span class="badge">14</span>
-                            Player One
-                          </li>
+                            <li class="list-group-item" ng-repeat="leader in quarterlyleaders">
+                                <span class="badge">{{leader.numberOfGamesWon}}</span>
+                                {{leader.firstName}} {{leader.lastName}}
+                            </li>
                         </ul>
                     <p><a class="btn btn-default" href="#" role="button">View all &raquo;</a></p>
                     </div>
@@ -78,10 +78,10 @@
                     </div>
                     <div class="panel-body">
                         <ul class="list-group">
-                          <li class="list-group-item">
-                            <span class="badge">14</span>
-                            Player One
-                          </li>
+                            <li class="list-group-item" ng-repeat="leader in yearlyleaders">
+                                <span class="badge">{{leader.numberOfGamesWon}}</span>
+                                {{leader.firstName}} {{leader.lastName}}
+                            </li>
                         </ul>
                     <p><a class="btn btn-default" href="#" role="button">View all &raquo;</a></p>
                     </div>
@@ -94,14 +94,10 @@
                     </div>
                     <div class="panel-body">
                         <ul class="list-group">
-                          <li class="list-group-item">
-                            <span class="badge">14</span>
-                            Player One
-                          </li>
-                          <li class="list-group-item">
-                            <span class="badge">12</span>
-                            Player Two
-                          </li>
+                            <li class="list-group-item" ng-repeat="leader in alltimeleaders">
+                                <span class="badge">{{leader.numberOfGamesWon}}</span>
+                                {{leader.firstName}} {{leader.lastName}}
+                            </li>
                         </ul>
                     <p><a class="btn btn-default" href="#" role="button">View all &raquo;</a></p>
                     </div>
