@@ -1,7 +1,9 @@
 package com.dakuris.foosbar.manager.impl;
 
 import com.dakuris.foosbar.base.Player;
+import com.dakuris.foosbar.dao.LeaderBoardDAO;
 import com.dakuris.foosbar.manager.LeaderBoardManager;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -14,23 +16,26 @@ import java.util.List;
  */
 public class LeaderBoardManagerImpl implements LeaderBoardManager {
 
+    @Autowired
+    LeaderBoardDAO dao;
+
     @Override
     public List<Player> getMonthlyLeaderBoard() {
-        return null;
+        return dao.getMonthlyLeaders();
     }
 
     @Override
     public List<Player> getQuarterlyLeaderBoard() {
-        return null;
+        return dao.getQuaterlyLeaders();
     }
 
     @Override
     public List<Player> getYearlyLeaderBoard() {
-        return null;
+        return dao.getYearlyLeaders();
     }
 
     @Override
     public List<Player> getAllTimeLeaderBoard() {
-        return null;
+        return dao.getAllTimeLeaders();
     }
 }

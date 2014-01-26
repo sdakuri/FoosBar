@@ -114,3 +114,19 @@ var ModalWinnerInstanceCtrl = function($scope, $modalInstance, winner){
         $modalInstance.close();
     },2000);
 }
+
+function MonthlyLeaderBoardControl($scope,$http){
+
+}
+
+function QuarterlyLeaderBoardControl($scope,$http){
+
+}
+
+function YearlyLeaderBoardControl($scope,$http){
+
+}
+
+function AllTimeLeaderBoardControl($scope,$http){
+
+}

@@ -75,7 +75,7 @@ BEGIN
         END IF;
         BEGIN
             INSERT INTO leaders(player, type, gameswon) VALUES (playerid, 'MONTHLY',1);
-            INSERT INTO leaders(player, type, gameswon) VALUES (playerid, 'QUATERLY',1);
+            INSERT INTO leaders(player, type, gameswon) VALUES (playerid, 'QUARTERLY',1);
             INSERT INTO leaders(player, type, gameswon) VALUES (playerid, 'YEARLY',1);
             INSERT INTO leaders(player, type, gameswon) VALUES (playerid, 'ALLTIME',1);
             RETURN;
