@@ -136,6 +136,9 @@ function AllTimeLeaderBoardControl($scope,$http){
     $http.get('leaders/alltime').success(function(leaders){
         $scope.alltimeleaders = leaders
     });
+    $http.get('leaders/allplayers').success(function(leaders){
+       $scope.allplayers = leaders;
+    });
 }
 
 var FileUploader = function($scope, $upload){

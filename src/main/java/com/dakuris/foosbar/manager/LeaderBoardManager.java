@@ -20,4 +20,6 @@ public interface LeaderBoardManager {
     public List<Player> getYearlyLeaderBoard();
 
     public List<Player> getAllTimeLeaderBoard();
+
+    List<Player> getAllPlayers();
 }

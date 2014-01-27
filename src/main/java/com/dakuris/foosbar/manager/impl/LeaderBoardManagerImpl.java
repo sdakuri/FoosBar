@@ -38,4 +38,9 @@ public class LeaderBoardManagerImpl implements LeaderBoardManager {
     public List<Player> getAllTimeLeaderBoard() {
         return dao.getAllTimeLeaders();
     }
+
+    @Override
+    public List<Player> getAllPlayers() {
+        return dao.getAllPlayers();
+    }
 }

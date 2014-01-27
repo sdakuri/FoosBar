@@ -47,4 +47,10 @@ public class LeaderboardController {
     List<Player> getAllTimeLeaders(){
         return leaderBoardManager.getAllTimeLeaderBoard();
     }
+
+    @RequestMapping(value = "/allplayers", method = RequestMethod.GET, produces = "application/json")
+    public @ResponseBody
+    List<Player> getAllPlayers(){
+        return leaderBoardManager.getAllPlayers();
+    }
 }
